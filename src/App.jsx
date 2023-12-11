@@ -7,18 +7,20 @@ import ContactsList from "./components/ContactList/ContactList.jsx";
 import Filter from "./components/Filter/Filter.jsx";
 
 function App() {
-  useEffect(() => {}, []);
-
   const newContact = {
     id: nanoid(),
     name,
     number,
   };
 
+  function addContact() {}
+
+  function deleteContact() {}
+
   return (
     <Container>
       <Typography variant="h3">Phonebook</Typography>
-      <ContactForm addContact={} />
+      <ContactForm addContact={addContact} />
       <Filter filter={filter} setFilter={setFilter} />
       <ContactsList
         contacts={contacts}
