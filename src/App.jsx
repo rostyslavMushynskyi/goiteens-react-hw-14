@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Container, Typography } from "@mui/material";
 import { nanoid } from "nanoid";
 
@@ -6,16 +6,51 @@ import ContactForm from "./components/ContactForm/ContactForm.jsx";
 import ContactsList from "./components/ContactList/ContactList.jsx";
 import Filter from "./components/Filter/Filter.jsx";
 
+import {
+  addContactAction,
+  removeContactAction,
+  setQueryAction,
+} from "./redux/contacts/contactsActions.js";
+
+import {
+  getContacts,
+  getFilter,
+  selectFilteredContacts,
+} from "./redux/contacts/contactsSelectors.js";
+
 function App() {
-  const newContact = {
-    id: nanoid(),
-    name,
-    number,
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const filteredContacts = useSelector(selectFilteredContacts);
+
+  const dispatch = useDispatch();
+
+  function addContact(name, number) {
+    const isDuplicateName = contacts.some(
+      (contact) => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (isDuplicateName) {
+      alert("Duplicate contact");
+      return true;
+    }
+
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    dispatch(addContactAction(newContact));
+  }
+
+  function deleteContact(id) {
+    dispatch(removeContactAction(id));
+  }
+
+  const setFilter = (newFilter) => {
+    dispatch(setQueryAction(newFilter));
   };
-
-  function addContact() {}
-
-  function deleteContact() {}
 
   return (
     <Container>
@@ -23,7 +58,7 @@ function App() {
       <ContactForm addContact={addContact} />
       <Filter filter={filter} setFilter={setFilter} />
       <ContactsList
-        contacts={contacts}
+        contacts={filteredContacts}
         filter={filter}
         deleteContact={deleteContact}
       />

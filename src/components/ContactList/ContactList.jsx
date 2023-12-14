@@ -33,7 +33,6 @@ function ContactList({ contacts, filter, deleteContact }) {
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
-
   return (
     <AnimatePresence>
       <motion.div
