@@ -11,7 +11,7 @@ const contactsReducer = createReducer([], (builder) => {
       state.unshift(action.payload);
     })
     .addCase(removeContactAction, (state, action) => {
-      return state.filter((contact) => contact.id !== action.payload); // Use correct filter condition
+      return state.filter((contact) => contact.id !== action.payload);
     });
 });
 
